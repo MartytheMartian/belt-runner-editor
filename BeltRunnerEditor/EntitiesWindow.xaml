@@ -1,0 +1,47 @@
+﻿<Window x:Class="BeltRunnerEditor.EntitiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        DataContext="{StaticResource LevelModel}"
+        mc:Ignorable="d"
+        Title="Entities"
+        Height="450"
+        Width="350">
+    <Window.Resources>
+        <Style x:Key="Add" TargetType="Label">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical">
+                <ItemsControl ItemsSource="{Binding Entities}" AlternationCount="1000">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="0,0,10,10">
+                                <Label Content="{Binding Type}" VerticalAlignment="Center" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="E" IsEnabled="{Binding EntityUnselected, Source={StaticResource LevelModel}}"
+                                            Command="{Binding EditEntityCommand, Source={StaticResource LevelModel}}"
+                                            CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), RelativeSource={RelativeSource TemplatedParent}}"
+                                            Click="EditClicked"
+                                            FontSize="20" Width="20" HorizontalAlignment="Right" Margin="0,0,10,0" />
+                                    <Button Content="↑" IsEnabled="{Binding EntityUnselected, Source={StaticResource LevelModel}}" FontSize="20" Width="20" HorizontalAlignment="Right" Margin="0,0,10,0" />
+                                    <Button Content="↓" IsEnabled="{Binding EntityUnselected, Source={StaticResource LevelModel}}" FontSize="20" Width="20" HorizontalAlignment="Right" />
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Label Content="Add" IsEnabled="{Binding EntityUnselected}" Style="{StaticResource Add}" Margin="0,5,0,5" MouseLeftButtonUp="AddEntityClicked" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

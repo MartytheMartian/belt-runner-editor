@@ -1,0 +1,83 @@
+﻿<Window x:Class="BeltRunnerEditor.NewEntityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        DataContext="{StaticResource LevelModel}"
+        mc:Ignorable="d"
+        Title="New Entity" Height="400" Width="300">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Unloaded">
+            <i:InvokeCommandAction Command="{Binding CancelEntityCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Margin" Value="5,5,5,0" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="20" />
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10,5,10,5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60*" />
+            <ColumnDefinition Width="190*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Text="ID" Grid.Column="0" Grid.Row="0" Margin="0,4,4.333,4.667" />
+        <TextBlock Text="Type" Grid.Column="0" Grid.Row="1" Margin="0,4.333,4.333,4.333" />
+        <TextBlock Text="Graphic" Grid.Column="0" Grid.Row="2" Margin="0,4.667,4.333,4" />
+        <TextBlock Text="X" Grid.Column="0" Grid.Row="3" Margin="0,4,4.333,4.667" />
+        <TextBlock Text="Y" Grid.Column="0" Grid.Row="4" Margin="0,4.333,4.333,4.333" />
+        <TextBlock Text="Velocity X" Grid.Column="0" Grid.Row="5" Margin="0,4.667,4.333,4" />
+        <TextBlock Text="Velocity Y" Grid.Column="0" Grid.Row="6" Margin="0,4,4.333,4.667" />
+        <TextBlock Text="Dest X" Grid.Column="0" Grid.Row="7" Margin="0,4.333,4.333,4.333" />
+        <TextBlock Text="Dest Y" Grid.Column="0" Grid.Row="8" Margin="0,4.667,4.333,4" />
+        <TextBlock Text="Speed" Grid.Column="0" Grid.Row="9" Margin="0,4,4.333,4.667" />
+        <TextBlock Text="Delay" Grid.Column="0" Grid.Row="10" Margin="0,4.333,4.333,3.667" />
+        <TextBox Text="{Binding SelectedEntity.ID, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="0" Margin="0,4,4.333,4.667" />
+        <ComboBox Text="{Binding SelectedEntity.Type, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="1" Margin="0,4.333,4.333,4.333">
+            <ComboBoxItem Content="alien" />
+            <ComboBoxItem Content="asteroid" />
+            <ComboBoxItem Content="debris" />
+            <ComboBoxItem Content="nebula" />
+            <ComboBoxItem Content="pirate" />
+            <ComboBoxItem Content="player" />
+            <ComboBoxItem Content="turret" />
+        </ComboBox>
+        <ComboBox SelectedValue="{Binding SelectedEntity.Graphic}" ItemsSource="{Binding Graphics}" Grid.Column="1" Grid.Row="2" Margin="0,4.667,4.333,4" />
+        <TextBox Text="{Binding SelectedEntity.X, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="3" Margin="0,4,4.333,4.667" />
+        <TextBox Text="{Binding SelectedEntity.Y, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="4" Margin="0,4.333,4.333,4.333" />
+        <TextBox Text="{Binding SelectedEntity.VelocityX, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="5" Margin="0,4.667,4.333,4" />
+        <TextBox Text="{Binding SelectedEntity.VelocityY, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="6" Margin="0,4,4.333,4.667" />
+        <TextBox Text="{Binding SelectedEntity.DestinationX, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="7" Margin="0,4.333,4.333,4.333" />
+        <TextBox Text="{Binding SelectedEntity.DestinationY, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="8" Margin="0,4.667,4.333,4" />
+        <TextBox Text="{Binding SelectedEntity.Speed}" Grid.Column="1" Grid.Row="9" Margin="0,4,4.333,4.667" />
+        <TextBox Text="{Binding SelectedEntity.Delay}" Grid.Column="1" Grid.Row="10" Margin="0,4.333,4.333,3.667" />
+        <StackPanel Grid.Column="1" Grid.Row="11" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancel" Click="CancelClicked" />
+            <Button Content="Save" Command="{Binding SaveEntityCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>
