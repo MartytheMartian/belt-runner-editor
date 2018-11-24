@@ -1,6 +1,6 @@
 ﻿using BeltRunnerEditor.Enums;
 
-namespace BeltRunnerEditor.Models
+namespace BeltRunnerEditor.Entities
 {
     /// <summary>
     /// Animation sequence

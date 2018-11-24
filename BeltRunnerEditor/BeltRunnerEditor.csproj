@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BC23176-02ED-4F43-96F4-69BB863EF571}</ProjectGuid>
+    <ProjectGuid>{E89BD019-CDB7-4811-A31A-3EA5919A94A1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>BeltRunnerEditor</RootNamespace>
     <AssemblyName>BeltRunnerEditor</AssemblyName>
@@ -14,7 +14,6 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,16 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicrosoftExpressionInteractions.3.0.40218.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,45 +54,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\PointEllipseConverter.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="EntitiesWindow.xaml.cs">
-      <DependentUpon>EntitiesWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Converters\PointConverter.cs" />
+    <Compile Include="DependencyResolution\DependencyRoot.cs" />
+    <Compile Include="DependencyResolution\ServiceLocator.cs" />
+    <Compile Include="Entities\AnimatedGraphic.cs" />
+    <Compile Include="Entities\BaseGraphic.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Level.cs" />
+    <Compile Include="Entities\ScrollingGraphic.cs" />
+    <Compile Include="Entities\Sequence.cs" />
+    <Compile Include="Entities\SetGraphic.cs" />
+    <Compile Include="Entities\StaticGraphic.cs" />
     <Compile Include="Enums\GraphicType.cs" />
     <Compile Include="Enums\LoopDirection.cs" />
-    <Compile Include="Models\AnimatedGraphic.cs" />
-    <Compile Include="Models\BaseGraphic.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\LevelData.cs" />
-    <Compile Include="Models\ScrollingGraphic.cs" />
-    <Compile Include="Models\Sequence.cs" />
-    <Compile Include="Models\SetGraphic.cs" />
-    <Compile Include="Models\StaticGraphic.cs" />
-    <Compile Include="NewEntityWindow.xaml.cs">
-      <DependentUpon>NewEntityWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Interfaces\ILevelRepository.cs" />
+    <Compile Include="BRMath.cs" />
+    <Compile Include="ViewModels\EntityModel.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="Repositories\LevelRepository.cs" />
-    <Compile Include="Validators\DoubleRule.cs" />
     <Compile Include="ViewModels\LevelModel.cs" />
-    <Page Include="EntitiesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Views\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Views\Entities.xaml.cs">
+      <DependentUpon>Entities.xaml</DependentUpon>
     </Compile>
-    <Page Include="NewEntityWindow.xaml">
+    <Compile Include="Views\Entity.xaml.cs">
+      <DependentUpon>Entity.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Entities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Entity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -123,7 +117,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

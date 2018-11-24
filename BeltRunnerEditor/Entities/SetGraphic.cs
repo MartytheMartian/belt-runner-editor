@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows;
 using System.Xml;
 
 using BeltRunnerEditor.Enums;
 
-namespace BeltRunnerEditor.Models
+namespace BeltRunnerEditor.Entities
 {
     /// <summary>
     /// Graphic that is a set of other graphics
@@ -62,6 +64,38 @@ namespace BeltRunnerEditor.Models
                 // Add the graphic
                 Graphics.Add(graphic);
             }
+        }
+
+        /// <summary>
+        /// Gets the size of the graphic
+        /// </summary>
+        /// <returns>Size of the graphic</returns>
+        public override Size GetSize()
+        {
+            return Graphics[0].GetSize();
+        }
+
+        /// <summary>
+        /// Converts the graphic to XML
+        /// </summary>
+        /// <param name="indention">Indention to apply to the XML</param>
+        /// <returns>Graphic XML</returns>
+        public override string ToXml(int indention)
+        {
+            StringBuilder xmlBuilder = new StringBuilder();
+
+            // Append the start of the graphic line
+            xmlBuilder.AppendFormat("{0}<graphic id=\"{1}\" ", new string(' ', indention), ID);
+
+            // Append additional properties
+            xmlBuilder.AppendFormat("type=\"set\">{0}", Environment.NewLine);
+            foreach (BaseGraphic child in Graphics)
+            {
+                xmlBuilder.AppendLine(child.ToXml(indention + 2));
+            }
+            xmlBuilder.AppendFormat("{0}</graphic>", new string(' ', indention));
+
+            return xmlBuilder.ToString();
         }
     }
 }

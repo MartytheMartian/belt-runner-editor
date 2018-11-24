@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Windows;
 using System.Xml;
 
 using BeltRunnerEditor.Enums;
 
-namespace BeltRunnerEditor.Models
+namespace BeltRunnerEditor.Entities
 {
     /// <summary>
     /// A single grpahic
@@ -46,5 +47,18 @@ namespace BeltRunnerEditor.Models
 
             ID = xml.Attributes["id"].Value;
         }
+
+        /// <summary>
+        /// Gets the size of the graphic
+        /// </summary>
+        /// <returns>Size of the graphic</returns>
+        public abstract Size GetSize();
+
+        /// <summary>
+        /// Converts the graphic to XML
+        /// </summary>
+        /// <param name="indention">Indention to apply to the XML</param>
+        /// <returns>Graphic XML</returns>
+        public abstract string ToXml(int indention);
     }
 }

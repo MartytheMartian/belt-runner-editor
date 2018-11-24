@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeltRunnerEditor", "BeltRunnerEditor\BeltRunnerEditor.csproj", "{7BC23176-02ED-4F43-96F4-69BB863EF571}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeltRunnerEditor", "BeltRunnerEditor\BeltRunnerEditor.csproj", "{E89BD019-CDB7-4811-A31A-3EA5919A94A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7BC23176-02ED-4F43-96F4-69BB863EF571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BC23176-02ED-4F43-96F4-69BB863EF571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BC23176-02ED-4F43-96F4-69BB863EF571}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BC23176-02ED-4F43-96F4-69BB863EF571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E89BD019-CDB7-4811-A31A-3EA5919A94A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E89BD019-CDB7-4811-A31A-3EA5919A94A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E89BD019-CDB7-4811-A31A-3EA5919A94A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E89BD019-CDB7-4811-A31A-3EA5919A94A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D0845430-5D1E-43F4-BB33-C863640BBBC4}
+		SolutionGuid = {25427D74-3DE7-496A-966A-7AA5327C1BAC}
 	EndGlobalSection
 EndGlobal

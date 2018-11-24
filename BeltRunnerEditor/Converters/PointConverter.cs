@@ -25,7 +25,7 @@ namespace BeltRunnerEditor.Converters
             double point = (double)value;
 
             // Adjust for the ellipse
-            point -= 5;
+            point -= 10;
 
             return point;
         }
@@ -45,7 +45,7 @@ namespace BeltRunnerEditor.Converters
             double point = (double)value;
 
             // Adjust for the ellipse
-            point += 5;
+            point += 10;
 
             return point;
         }

@@ -1,9 +1,9 @@
 ﻿<Application x:Class="BeltRunnerEditor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:BeltRunnerEditor.ViewModels"
-             StartupUri="MainWindow.xaml">
+             xmlns:dr="clr-namespace:BeltRunnerEditor.DependencyResolution"
+             StartupUri="Views\Editor.xaml">
     <Application.Resources>
-        <vm:LevelModel x:Key="LevelModel" />
+        <dr:DependencyRoot x:Key="Locator" />
     </Application.Resources>
 </Application>

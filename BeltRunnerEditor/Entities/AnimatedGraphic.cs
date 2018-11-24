@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using System.Windows;
 using System.Xml;
 
 using BeltRunnerEditor.Enums;
 
-namespace BeltRunnerEditor.Models
+namespace BeltRunnerEditor.Entities
 {
     /// <summary>
     /// Graphic that is an animated spritesheet
@@ -109,6 +111,49 @@ namespace BeltRunnerEditor.Models
                 // Add the sequence
                 Sequences.Add(sequence);
             }
+        }
+
+        /// <summary>
+        /// Gets the size of the graphic
+        /// </summary>
+        /// <returns>Size of the graphic</returns>
+        public override Size GetSize()
+        {
+            return new Size(Width, Height);
+        }
+
+        /// <summary>
+        /// Converts the graphic to XML
+        /// </summary>
+        /// <param name="indention">Indention to apply to the XML</param>
+        /// <returns>Graphic XML</returns>
+        public override string ToXml(int indention)
+        {
+            StringBuilder xmlBuilder = new StringBuilder();
+
+            // Append the start of the graphic line
+            xmlBuilder.AppendFormat("{0}<graphic id=\"{1}\" ", new string(' ', indention), ID);
+
+            // Append standard properties
+            xmlBuilder.AppendFormat("type=\"animated\" path=\"{0}\" width=\"{1}\" height=\"{2}\" numFrames=\"{3}\" sheetContentWidth=\"{4}\" sheetContentHeight=\"{5}\">",
+                Path, Width, Height, NumFrames,
+                SheetContentWidth, SheetContentHeight);
+
+            // Append sequences
+            foreach (Sequence sequence in Sequences)
+            {
+                xmlBuilder.AppendLine();
+                string direction = sequence.Direction == LoopDirection.Forward ? "forward" : "bounce";
+                xmlBuilder.AppendFormat("{0}<sequence name=\"{1}\" start=\"{2}\" count=\"{3}\" rotation=\"{4}\" time=\"{5}\" loopCount=\"{6}\" loopDirection=\"{7}\" />",
+                    new string(' ', indention + 2), sequence.Name, sequence.Start, sequence.Count,
+                    sequence.Rotation, sequence.Time, sequence.LoopCount, direction);
+            }
+
+            // Start a new line
+            xmlBuilder.AppendLine();
+            xmlBuilder.AppendFormat("{0}</graphic>", new string(' ', indention));
+
+            return xmlBuilder.ToString();
         }
     }
 }
