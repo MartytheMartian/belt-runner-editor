@@ -18,5 +18,11 @@ namespace BeltRunnerEditor.Interfaces
         /// </summary>
         /// <param name="level">Level to save</param>
         void Save(Level level);
+
+        /// <summary>
+        /// Save a level as a new file
+        /// </summary>
+        /// <param name="level">Level to save</param>
+        void SaveAs(Level level);
     }
 }

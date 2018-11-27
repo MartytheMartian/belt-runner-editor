@@ -74,6 +74,33 @@ namespace BeltRunnerEditor.Views
         }
 
         /// <summary>
+        /// Called when the delete button on the entity list is clicked
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        private void DeleteClicked(object sender, RoutedEventArgs e)
+        {
+            // Get the button
+            Button button = (Button)sender;
+
+            // Grab the index
+            int index = (int)button.CommandParameter;
+
+            // Delete the entity
+            ServiceLocator.Instance.Level.Level.Entities.RemoveAt(index);
+
+            // Unload the entity if necessary
+            if (ServiceLocator.Instance.Entity.Index == index)
+            {
+                ServiceLocator.Instance.Entity.Entity = null;
+                ServiceLocator.Instance.Entity.Index = -1;
+                ServiceLocator.Instance.Entity.Update();
+            }
+
+            ServiceLocator.Instance.Level.Update();
+        }
+
+        /// <summary>
         /// Opens the entity window
         /// </summary>
         private void Open()
@@ -89,6 +116,11 @@ namespace BeltRunnerEditor.Views
                 };
 
                 _entityWindow.Show();
+            }
+            else
+            {
+                ServiceLocator.Instance.Level.Update();
+                ServiceLocator.Instance.Entity.Update();
             }
         }
     }

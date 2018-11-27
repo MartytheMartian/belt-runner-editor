@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 using BeltRunnerEditor.DependencyResolution;
 
@@ -22,6 +24,31 @@ namespace BeltRunnerEditor.Views
 
             // Bind to events
             SourceUpdated += EntityUpdated;
+        }
+
+        /// <summary>
+        /// Called when key press occurs
+        /// </summary>
+        /// <param name="e">Key event arguments</param>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            // Only care about shift commands
+            bool ctrl = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+            if (!ctrl)
+            {
+                return;
+            }
+
+            // Handle specific inputs
+            switch (e.Key)
+            {
+                case Key.S:
+                    SaveClicked(null, null);
+                    break;
+            }
+
+            // Pass down to the base class
+            base.OnKeyUp(e);
         }
 
         /// <summary>
@@ -54,11 +81,8 @@ namespace BeltRunnerEditor.Views
         /// <param name="e">Event arguments</param>
         private void SaveClicked(object sender, RoutedEventArgs e)
         {
-            // Get the button
-            Button button = (Button)sender;
-
             // Get the index
-            int index = (int)button.CommandParameter;
+            int index = ServiceLocator.Instance.Entity.Index;
 
             // Copy the entity
             ent existingEntity = ServiceLocator.Instance.Entity.Entity;
@@ -79,22 +103,27 @@ namespace BeltRunnerEditor.Views
             if (index == -1)
             {
                 ServiceLocator.Instance.Level.Level.Entities.Add(entity);
-                ServiceLocator.Instance.Entity.Index = ServiceLocator.Instance.Level.Entities.Count - 1;
-                ServiceLocator.Instance.Level.Update();
+                ServiceLocator.Instance.Entity.Index = ServiceLocator.Instance.Level.Level.Entities.Count - 1;
             }
             else
             {
-                ServiceLocator.Instance.Level.Entities[index].ID = existingEntity.ID;
-                ServiceLocator.Instance.Level.Entities[index].Type = existingEntity.Type;
-                ServiceLocator.Instance.Level.Entities[index].Graphic = existingEntity.Graphic;
-                ServiceLocator.Instance.Level.Entities[index].X = existingEntity.X;
-                ServiceLocator.Instance.Level.Entities[index].Y = existingEntity.Y;
-                ServiceLocator.Instance.Level.Entities[index].DestinationX = existingEntity.DestinationX;
-                ServiceLocator.Instance.Level.Entities[index].DestinationY = existingEntity.DestinationY;
-                ServiceLocator.Instance.Level.Entities[index].Speed = existingEntity.Speed;
-                ServiceLocator.Instance.Level.Entities[index].Delay = existingEntity.Delay;
-                ServiceLocator.Instance.Level.Update();
+                ServiceLocator.Instance.Level.Level.Entities[index].ID = existingEntity.ID;
+                ServiceLocator.Instance.Level.Level.Entities[index].Type = existingEntity.Type;
+                ServiceLocator.Instance.Level.Level.Entities[index].Graphic = existingEntity.Graphic;
+                ServiceLocator.Instance.Level.Level.Entities[index].X = existingEntity.X;
+                ServiceLocator.Instance.Level.Level.Entities[index].Y = existingEntity.Y;
+                ServiceLocator.Instance.Level.Level.Entities[index].DestinationX = existingEntity.DestinationX;
+                ServiceLocator.Instance.Level.Level.Entities[index].DestinationY = existingEntity.DestinationY;
+                ServiceLocator.Instance.Level.Level.Entities[index].Speed = existingEntity.Speed;
+                ServiceLocator.Instance.Level.Level.Entities[index].Delay = existingEntity.Delay;
             }
+
+            // Ensure the entities are kept in the right order
+            ServiceLocator.Instance.Level.Level.Entities = ServiceLocator.Instance.Level.Level.Entities
+                .OrderBy(ent => ent.Delay.HasValue ? ent.Delay.Value : 0)
+                .ThenBy(ent => ent.Type).ToList();
+            ServiceLocator.Instance.Level.Update();
+            ServiceLocator.Instance.Entity.Update();
         }
     }
 }

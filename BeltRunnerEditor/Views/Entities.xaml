@@ -24,21 +24,24 @@
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Visible">
             <StackPanel Orientation="Vertical">
-                <ItemsControl ItemsSource="{Binding Entities}" AlternationCount="1000">
+                <ItemsControl ItemsSource="{Binding Entities}" AlternationCount="10000">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <DockPanel Margin="0,0,10,10">
                                 <Label Content="{Binding Type}" VerticalAlignment="Center" />
+                                <Label Content="{Binding Delay}" VerticalAlignment="Center" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <StackPanel.DataContext>
                                         <Binding Path="Entity" Source="{StaticResource Locator}" />
                                     </StackPanel.DataContext>
-                                    <Button Content="E" IsEnabled="{Binding Unloaded}"
+                                    <Button Content="E"
                                             Click="EditClicked"
                                             CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), RelativeSource={RelativeSource TemplatedParent}}"
                                             FontSize="20" Width="20" HorizontalAlignment="Right" Margin="0,0,10,0" />
-                                    <Button Content="↑" IsEnabled="{Binding Unloaded}" FontSize="20" Width="20" HorizontalAlignment="Right" Margin="0,0,10,0" />
-                                    <Button Content="↓" IsEnabled="{Binding Unloaded}" FontSize="20" Width="20" HorizontalAlignment="Right" />
+                                    <Button Content="D"
+                                            Click="DeleteClicked"
+                                            CommandParameter="{Binding Path=(ItemsControl.AlternationIndex), RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="20" Width="20" HorizontalAlignment="Right" Margin="0,0,10,0" />
                                 </StackPanel>
                             </DockPanel>
                         </DataTemplate>

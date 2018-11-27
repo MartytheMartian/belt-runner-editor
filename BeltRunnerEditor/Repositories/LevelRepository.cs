@@ -44,7 +44,7 @@ namespace BeltRunnerEditor.Repositories
             document.Load(file);
 
             // Populate the level
-            level = new Level(document);
+            level = new Level(file, document);
 
             return level;
         }
@@ -54,6 +54,32 @@ namespace BeltRunnerEditor.Repositories
         /// </summary>
         /// <param name="level">Level to save</param>
         public void Save(Level level)
+        {
+            // Save as a new file if there is no path
+            if (String.IsNullOrWhiteSpace(level.FileName))
+            {
+                SaveAs(level);
+                return;
+            }
+
+            // Generate level XML
+            string xml = level.ToXml();
+
+            // Delete the file if it already exists
+            if (File.Exists(level.FileName))
+            {
+                File.Delete(level.FileName);
+            }
+
+            // Create a new file
+            File.WriteAllText(level.FileName, xml);
+        }
+
+        /// <summary>
+        /// Save a level as a new file
+        /// </summary>
+        /// <param name="level">Level to save</param>
+        public void SaveAs(Level level)
         {
             // Generate level XML
             string xml = level.ToXml();

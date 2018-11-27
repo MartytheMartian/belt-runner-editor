@@ -93,6 +93,24 @@ namespace BeltRunnerEditor.Entities
         }
 
         /// <summary>
+        /// Power-up applied to the entity
+        /// </summary>
+        public string PowerUp
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// ID of the attached lurcher. Only applies to crates.
+        /// </summary>
+        public string LurcherID
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Constructs a new instance of the <see cref="Entity" /> class
         /// with the properties defaulted
         /// </summary>
@@ -107,6 +125,8 @@ namespace BeltRunnerEditor.Entities
             DestinationY = null;
             Speed = null;
             Delay = null;
+            PowerUp = null;
+            LurcherID = null;
         }
 
         /// <summary>
@@ -130,6 +150,10 @@ namespace BeltRunnerEditor.Entities
             Y = Double.Parse(xml.Attributes["y"].Value);
             Delay = xml.Attributes["delay"] == null ? null : (int?)int.Parse(xml.Attributes["delay"].Value);
 
+            // Read extra props
+            PowerUp = xml.Attributes["powerUp"] == null ? null : xml.Attributes["powerUp"].Value;
+            LurcherID = xml.Attributes["lurcherId"] == null ? null : xml.Attributes["lurcherId"].Value;
+
             // Default optional types
             DestinationX = null;
             DestinationY = null;
@@ -144,6 +168,8 @@ namespace BeltRunnerEditor.Entities
                 case "debris":
                 case "nebula":
                 case "pirate":
+                case "crate":
+                case "lurcher":
                     // Read the properties
                     double? vX = xml.Attributes["vX"] == null ? null : (double?)Double.Parse(xml.Attributes["vX"].Value);
                     double? vY = xml.Attributes["vY"] == null ? null : (double?)Double.Parse(xml.Attributes["vY"].Value);
@@ -165,7 +191,6 @@ namespace BeltRunnerEditor.Entities
 
                     // Calculate speed
                     Speed = BRMath.CalculateSpeed(position, destination, velocity);
-
                     break;
             }
         }
@@ -280,7 +305,17 @@ namespace BeltRunnerEditor.Entities
 
             if (Delay.HasValue)
             {
-                xmlBuilder.AppendFormat("delay=\"{0}\"", Delay);
+                xmlBuilder.AppendFormat("delay=\"{0}\" ", Delay);
+            }
+
+            if (!String.IsNullOrWhiteSpace(PowerUp))
+            {
+                xmlBuilder.AppendFormat("powerUp=\"{0}\" ", PowerUp);
+            }
+
+            if (!String.IsNullOrWhiteSpace(LurcherID))
+            {
+                xmlBuilder.AppendFormat("lurcherId=\"{0}\" ", LurcherID);
             }
 
             // Close the entity

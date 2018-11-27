@@ -65,7 +65,7 @@ namespace BeltRunnerEditor
             Func<double, bool> xCheck = null;
             if (vx == 0)
             {
-                ox = 0;
+                ox = x;
                 xCheck = (v) => false;
             }
             else if (vx > 0)
@@ -85,7 +85,7 @@ namespace BeltRunnerEditor
             Func<double, bool> yCheck = null;
             if (vy == 0)
             {
-                oy = 0;
+                oy = y;
                 yCheck = (v) => false;
             }
             else if (vy > 0)

@@ -32,6 +32,46 @@ namespace BeltRunnerEditor.Views
         }
 
         /// <summary>
+        /// Called when key press occurs
+        /// </summary>
+        /// <param name="e">Key event arguments</param>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            // Only care about shift commands
+            bool ctrl = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+            if (!ctrl)
+            {
+                return;
+            }
+
+            // Modifiers
+            bool shift = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+
+            // Handle specific inputs
+            switch (e.Key)
+            {
+                case Key.S:
+                    if (shift)
+                    {
+                        SaveAsClicked(null, null);
+                    }
+                    else
+                    {
+                        SaveClicked(null, null);
+                    }
+                    break;
+                case Key.O:
+                    OpenClicked(null, null);
+                    break;
+            }
+
+            // Pass down to the base class
+            base.OnKeyUp(e);
+        }
+
+        #region UI Events
+
+        /// <summary>
         /// Called when the exit menu item has been clicked
         /// </summary>
         /// <param name="sender">Sender of the event</param>
@@ -145,24 +185,46 @@ namespace BeltRunnerEditor.Views
         }
 
         /// <summary>
-        /// Called when the "New" menu item is clicked
+        /// Called when the "Save" menu item is clicked
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments for the event</param>
         private void SaveClicked(object sender, RoutedEventArgs e)
         {
-            // Get the level
-            Level level = ServiceLocator.Instance.Level.Level;
-
             // Do nothing if a level isn't loaded
-            if (level == null)
+            if (!ServiceLocator.Instance.Level.Loaded)
             {
                 return;
             }
 
+            // Get the level
+            Level level = ServiceLocator.Instance.Level.Level;
+
             // Set the entity
             ServiceLocator.Instance.LevelRepository.Save(level);
         }
+
+        /// <summary>
+        /// Called when the "Save As" menu item is clicked
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments for the event</param>
+        private void SaveAsClicked(object sender, RoutedEventArgs e)
+        {
+            // Do nothing if a level isn't loaded
+            if (!ServiceLocator.Instance.Level.Loaded)
+            {
+                return;
+            }
+
+            // Get the level
+            Level level = ServiceLocator.Instance.Level.Level;
+
+            // Set the entity
+            ServiceLocator.Instance.LevelRepository.SaveAs(level);
+        }
+
+        #endregion
 
         #region Grid events
 

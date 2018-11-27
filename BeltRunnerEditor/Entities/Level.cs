@@ -12,6 +12,11 @@ namespace BeltRunnerEditor.Entities
     public class Level
     {
         /// <summary>
+        /// Full file path
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
         /// Name of the level
         /// </summary>
         public string Name { get; set; }
@@ -22,9 +27,9 @@ namespace BeltRunnerEditor.Entities
         public List<BaseGraphic> Graphics { get; set; }
 
         /// <summary>
-        /// XML for any graphics read
+        /// XML for any graphics read that cannot be edited
         /// </summary>
-        public List<string> BackgroundXML { get; set; }
+        public List<string> Ignorables { get; set; }
 
         /// <summary>
         /// Entities in the level
@@ -37,9 +42,10 @@ namespace BeltRunnerEditor.Entities
         /// </summary>
         public Level()
         {
+            FileName = null;
             Name = "New Level";
             Graphics = new List<BaseGraphic>();
-            BackgroundXML = new List<string>();
+            Ignorables = new List<string>();
             Entities = new List<Entity>();
         }
 
@@ -47,14 +53,18 @@ namespace BeltRunnerEditor.Entities
         /// Constructs a new instance of the <see cref="Level" /> class
         /// with properties populated from XML
         /// </summary>
+        /// <param name="file">Full file path</param>
         /// <param name="xml">XML to read</param>
-        public Level(XmlDocument xml)
+        public Level(string file, XmlDocument xml)
             : this()
         {
             if (xml == null)
             {
                 throw new ArgumentNullException(nameof(xml));
             }
+
+            // Load the file name
+            FileName = file;
 
             // Read the info section
             Name = xml.ChildNodes[0].ChildNodes[0].Attributes["name"].Value;
@@ -89,9 +99,11 @@ namespace BeltRunnerEditor.Entities
             foreach (XmlNode entityXML in xml.ChildNodes[0].ChildNodes[2].ChildNodes)
             {
                 // Read backgrounds directly and move on
-                if (entityXML.Attributes["type"].Value == "background")
+                if (entityXML.Attributes["type"].Value == "background" ||
+                    entityXML.Attributes["type"].Value == "player" ||
+                    entityXML.Attributes["type"].Value == "turret")
                 {
-                    BackgroundXML.Add(entityXML.OuterXml);
+                    Ignorables.Add(entityXML.OuterXml);
                     continue;
                 }
 
@@ -115,6 +127,10 @@ namespace BeltRunnerEditor.Entities
                 // Add the entity
                 Entities.Add(entity);
             }
+
+            // Order the entities in the desired order
+            Entities = Entities.OrderBy(e => e.Delay.HasValue ? e.Delay.Value : 0)
+                .ThenBy(e => e.Type).ToList();
         }
 
         /// <summary>
@@ -148,9 +164,9 @@ namespace BeltRunnerEditor.Entities
             xmlBuilder.AppendLine("  <entities>");
 
             // Append each background XML
-            foreach (string background in BackgroundXML)
+            foreach (string ignorable in Ignorables)
             {
-                xmlBuilder.AppendLine("    " + background);
+                xmlBuilder.AppendLine("    " + ignorable);
             }
 
             // Create each entity

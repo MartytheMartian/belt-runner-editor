@@ -35,12 +35,16 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="N" />
+    </Window.InputBindings>
     <Grid>
         <DockPanel Background="Gray">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Open" Click="OpenClicked" />
-                    <MenuItem Header="_Save" Click="SaveClicked" IsEnabled="{Binding Loaded}" />
+                    <MenuItem Header="_Open" Click="OpenClicked" InputGestureText="Ctrl + O" />
+                    <MenuItem Header="_Save" Click="SaveClicked" IsEnabled="{Binding Loaded}" InputGestureText="Ctrl + S" />
+                    <MenuItem Header="_Save As" Click="SaveAsClicked" IsEnabled="{Binding Loaded}" InputGestureText="Ctrl + Shift + S" />
                     <Separator />
                     <MenuItem Header="_Exit" Click="ExitClicked" />
                 </MenuItem>

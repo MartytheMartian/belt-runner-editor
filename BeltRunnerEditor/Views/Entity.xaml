@@ -38,6 +38,8 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Text="ID" Grid.Column="0" Grid.Row="0" Margin="0,4,4.333,4.667" />
         <TextBlock Text="Type" Grid.Column="0" Grid.Row="1" Margin="0,4.333,4.333,4.333" />
@@ -48,6 +50,8 @@
         <TextBlock Text="Dest Y" Grid.Column="0" Grid.Row="6" Margin="0,4.667,4.333,4" />
         <TextBlock Text="Speed" Grid.Column="0" Grid.Row="7" Margin="0,4,4.333,4.667" />
         <TextBlock Text="Delay" Grid.Column="0" Grid.Row="8" Margin="0,4.333,4.333,3.667" />
+        <TextBlock Text="Power Up" Grid.Column="0" Grid.Row="9" Margin="0,4.333,4.333,3.667" />
+        <TextBlock Text="Lurcher ID" Grid.Column="0" Grid.Row="10" Margin="0,4.333,4.333,3.667" />
         <TextBox Text="{Binding Entity.ID, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="0" Margin="0,4,4.333,4.667" />
         <ComboBox SelectedValue="{Binding Entity.Type, NotifyOnSourceUpdated=True}" ItemsSource="{Binding Path=Level.Types, Source={StaticResource Locator}}" Grid.Column="1" Grid.Row="1" Margin="0,4.333,4.333,4.333" />
         <ComboBox SelectedValue="{Binding Entity.Graphic, NotifyOnSourceUpdated=True}" ItemsSource="{Binding Path=Level.Graphics, Source={StaticResource Locator}}" Grid.Column="1" Grid.Row="2" Margin="0,4.667,4.333,4" />
@@ -56,8 +60,10 @@
         <TextBox Text="{Binding Entity.DestinationX, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="5" Margin="0,4.333,4.333,4.333" />
         <TextBox Text="{Binding Entity.DestinationY, NotifyOnSourceUpdated=True}" Grid.Column="1" Grid.Row="6" Margin="0,4.667,4.333,4" />
         <TextBox Text="{Binding Entity.Speed, NotifyOnSourceUpdated=True, FallbackValue=null}" Grid.Column="1" Grid.Row="7" Margin="0,4,4.333,4.667" />
-        <TextBox Text="{Binding Entity.Delay,NotifyOnSourceUpdated=True, FallbackValue=null}" Grid.Column="1" Grid.Row="8" Margin="0,4.333,4.333,3.667" />
-        <StackPanel Grid.Column="1" Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBox Text="{Binding Entity.Delay, NotifyOnSourceUpdated=True, FallbackValue=null}" Grid.Column="1" Grid.Row="8" Margin="0,4.333,4.333,3.667" />
+        <ComboBox SelectedValue="{Binding Entity.PowerUp, NotifyOnSourceUpdated=True}" ItemsSource="{Binding Path=Level.PowerUps, Source={StaticResource Locator}}" Grid.Column="1" Grid.Row="9" Margin="0,4.667,4.333,4" />
+        <TextBox Text="{Binding Entity.LurcherID, NotifyOnSourceUpdated=True, FallbackValue=null}" Grid.Column="1" Grid.Row="10" Margin="0,4.333,4.333,3.667" />
+        <StackPanel Grid.Column="1" Grid.Row="11" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Cancel" Click="CancelClicked" />
             <Button Content="Save" Click="SaveClicked" CommandParameter="{Binding Index}" />
         </StackPanel>

@@ -62,11 +62,36 @@ namespace BeltRunnerEditor.ViewModels
                 {
                     "alien",
                     "asteroid",
+                    "crate",
                     "debris",
+                    "lurcher",
+                    "moonBottom",
+                    "moonTop",
                     "nebula",
                     "pirate",
                     "player",
+                    "tentacle",
                     "turret"
+                };
+            }
+        }
+
+        /// <summary>
+        /// List of available power-ups
+        /// </summary>
+        public List<string> PowerUps
+        {
+            get
+            {
+                return new List<string>
+                {
+                    string.Empty,
+                    "bonusShield",
+                    "fastEnemies",
+                    "fastRecharge",
+                    "killAll",
+                    "lurcher",
+                    "slowRecharge"
                 };
             }
         }
